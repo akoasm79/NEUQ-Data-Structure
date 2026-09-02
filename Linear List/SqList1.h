@@ -20,7 +20,7 @@ typedef struct {
     int listsize;
 } SqList;
 
-inline Status InitList(SqList& L) {
+inline Status InitList_Sq(SqList& L) {
     L.elem = (ElemType*)malloc(LIST_INIT_SIZE * sizeof(ElemType));
     if(!L.elem) return OVERFLOW;
     L.length = 0;
@@ -28,7 +28,7 @@ inline Status InitList(SqList& L) {
     return OK;
 }
 
-inline Status DestroyList(SqList& L) {
+inline Status DestroyList_Sq(SqList& L) {
     if(!L.elem) return ERROR;
     free(L.elem);
     L.elem = NULL;
@@ -37,30 +37,30 @@ inline Status DestroyList(SqList& L) {
     return OK;
 }
 
-inline Status ClearList(SqList& L) {
+inline Status ClearList_Sq(SqList& L) {
     if(!L.elem) return ERROR;
     L.length = 0;
     return OK;
 }
 
-inline Status ListEmpty(SqList L) {
+inline Status ListEmpty_Sq(SqList L) {
     if(!L.elem) return INFEASIBLE;
     return (L.length == 0? TRUE : FALSE);
 }
 
-inline int ListLength(SqList L) {
+inline int ListLength_Sq(SqList L) {
     if(!L.elem) return INFEASIBLE;
     return L.length;
 }
 
-inline Status GetElem(SqList L, int i, ElemType& e) {
+inline Status GetElem_Sq(SqList L, int i, ElemType& e) {
     if(!L.elem) return INFEASIBLE;
     if(i < 1 || i > L.length) return ERROR;
     e = *(L.elem + i - 1);
     return OK;
 }
 
-inline int LocateElem(SqList L, ElemType e, Status (*compare)(ElemType, ElemType)) {
+inline int LocateElem_Sq(SqList L, ElemType e, Status (*compare)(ElemType, ElemType)) {
     if(!L.elem) return INFEASIBLE;
     ElemType* p = L.elem;
     ElemType* q = L.elem + L.length - 1;
@@ -71,7 +71,7 @@ inline int LocateElem(SqList L, ElemType e, Status (*compare)(ElemType, ElemType
     return 0;
 }
 
-inline Status PriorElem(SqList L, ElemType cur_e, ElemType& pre_e) {
+inline Status PriorElem_Sq(SqList L, ElemType cur_e, ElemType& pre_e) {
     if(!L.elem) return INFEASIBLE;
     if(L.length == 0) return ERROR;
     ElemType* p = L.elem;
@@ -85,7 +85,7 @@ inline Status PriorElem(SqList L, ElemType cur_e, ElemType& pre_e) {
     return ERROR;
 }
 
-inline Status NextElem(SqList L, ElemType cur_e, ElemType& next_e) {
+inline Status NextElem_Sq(SqList L, ElemType cur_e, ElemType& next_e) {
     if(!L.elem) return INFEASIBLE;
     if(L.length == 0) return ERROR;
     ElemType* q = L.elem + L.length - 1;
@@ -99,7 +99,7 @@ inline Status NextElem(SqList L, ElemType cur_e, ElemType& next_e) {
     return ERROR;
 }
 
-inline Status ListIncrease(SqList& L) {
+inline Status ListIncrease_Sq(SqList& L) {
     if(!L.elem) return INFEASIBLE;
     ElemType* np = (ElemType*)realloc(L.elem, L.listsize + LISTINCREMENT * sizeof(ElemType));
     if(!np) return OVERFLOW;
@@ -108,7 +108,7 @@ inline Status ListIncrease(SqList& L) {
     return OK;
 }
 
-inline Status ListInsert(SqList& L, int i, ElemType e) {
+inline Status ListInsert_Sq(SqList& L, int i, ElemType e) {
     if(!L.elem) return INFEASIBLE;
     if(i < 1 || i > L.length + 1) return ERROR;
     if(L.length * sizeof(ElemType) >= (size_t)L.listsize) {
@@ -124,7 +124,7 @@ inline Status ListInsert(SqList& L, int i, ElemType e) {
     return OK;
 }
 
-inline Status ListDelete(SqList& L, int i, ElemType& e) {
+inline Status ListDelete_Sq(SqList& L, int i, ElemType& e) {
     if(!L.elem) return INFEASIBLE;
     if(i < 1 || i > L.length) return ERROR;
     ElemType* p = L.elem + i - 1;
@@ -136,7 +136,7 @@ inline Status ListDelete(SqList& L, int i, ElemType& e) {
     return OK;
 }
 
-inline Status ListTraverse(SqList& L, void (*visit)(ElemType&)) {
+inline Status ListTraverse_Sq(SqList& L, void (*visit)(ElemType&)) {
     if(!L.elem) return INFEASIBLE;
     ElemType* p = L.elem;
     ElemType* q = L.elem + L.length - 1;
