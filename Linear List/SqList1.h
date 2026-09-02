@@ -1,7 +1,7 @@
 #ifndef SQLIST1_H
 #define SQLIST1_H
 
-#include "Status.h"
+#include "../Status.h"
 #include<stdio.h>
 #include<stdlib.h>
 
