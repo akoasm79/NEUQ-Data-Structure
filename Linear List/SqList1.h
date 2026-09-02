@@ -112,7 +112,7 @@ inline Status ListInsert_Sq(SqList& L, int i, ElemType e) {
     if(!L.elem) return INFEASIBLE;
     if(i < 1 || i > L.length + 1) return ERROR;
     if(L.length * sizeof(ElemType) >= (size_t)L.listsize) {
-        Status flag = ListIncrease(L);
+        Status flag = ListIncrease_Sq(L);
         if(flag != OK) return ERROR;
     }
     ElemType* p = L.elem + L.length - 1;
