@@ -62,6 +62,7 @@ inline Status GetElem_Sq(SqList L, int i, ElemType& e) {
 
 inline int LocateElem_Sq(SqList L, ElemType e, Status (*compare)(ElemType, ElemType)) {
     if(!L.elem) return INFEASIBLE;
+    if(L.length == 0) return 0;
     ElemType* p = L.elem;
     ElemType* q = L.elem + L.length - 1;
     for(; p <= q; p++) 
@@ -113,7 +114,12 @@ inline Status ListInsert_Sq(SqList& L, int i, ElemType e) {
     if(i < 1 || i > L.length + 1) return ERROR;
     if(L.length * sizeof(ElemType) >= (size_t)L.listsize) {
         Status flag = ListIncrease_Sq(L);
-        if(flag != OK) return ERROR;
+        if(flag != OK) return flag;
+    }
+    if(L.length == 0) {
+        *L.elem = e;
+        L.length = 1;
+        return OK;
     }
     ElemType* p = L.elem + L.length - 1;
     ElemType* q = L.elem + i - 1;
@@ -138,6 +144,7 @@ inline Status ListDelete_Sq(SqList& L, int i, ElemType& e) {
 
 inline Status ListTraverse_Sq(SqList& L, void (*visit)(ElemType&)) {
     if(!L.elem) return INFEASIBLE;
+    if(L.length == 0) return OK;
     ElemType* p = L.elem;
     ElemType* q = L.elem + L.length - 1;
     for(; p <= q; p++)
